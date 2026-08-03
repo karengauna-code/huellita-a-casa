@@ -31,52 +31,52 @@ def init_db():
     conn.commit()
     conn.close()
 
+init_db()
+
 def generar_codigo():
-    numeros = ''.join(random.choices(string.digits, k=4))
+    numeros = ''.join(random.choices(string.digits, k=5))
     return f"HCA-{numeros}"
 
-# Ruta de la página de bienvenida (Explicación para el público)
+# Ruta de la página de bienvenida (Explicación)
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Ruta del formulario de registro
-@app.route('/registro')
-def registro():
-    return render_template('registro.html')
-
-@app.route('/registrar', methods=['POST'])
+# Ruta para el formulario de registro
+@app.route('/registrar', methods=['GET', 'POST'])
 def registrar():
-    nombre_mascota = request.form['nombre_mascota']
-    especie = request.form['especie']
-    nombre_dueno = request.form['nombre_dueno']
-    telefono = request.form['telefono']
-    direccion = request.form['direccion']
-    info_medica = request.form['info_medica']
-    
-    foto = request.files['foto']
-    nombre_foto = ""
-    if foto and foto.filename != '':
-        nombre_foto = foto.filename
-        foto.save(os.path.join(app.config['UPLOAD_FOLDER'], nombre_foto))
+    if request.method == 'POST':
+        nombre_mascota = request.form['nombre_mascota']
+        especie = request.form['especie']
+        nombre_dueno = request.form['nombre_dueno']
+        telefono = request.form['telefono']
+        direccion = request.form['direccion']
+        info_medica = request.form.get('info_medica', '')
+        
+        foto = request.files.get('foto')
+        nombre_foto = None
+        if foto and foto.filename != '':
+            nombre_foto = foto.filename
+            foto.save(os.path.join(app.config['UPLOAD_FOLDER'], nombre_foto))
 
-    codigo_unico = generar_codigo()
-    
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    try:
+        codigo_unico = generar_codigo()
+
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO mascotas (codigo_unico, nombre_mascota, especie, nombre_dueno, telefono, direccion, info_medica, foto)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ''', (codigo_unico, nombre_mascota, especie, nombre_dueno, telefono, direccion, info_medica, nombre_foto))
         conn.commit()
-    except sqlite3.IntegrityError:
-        pass
-    finally:
         conn.close()
-        
-    return render_template('exito.html', codigo=codigo_unico, mascota=nombre_mascota)
+
+        return redirect(url_for('exito', codigo=codigo_unico))
+
+    return render_template('registrar.html')
+
+@app.route('/exito/<codigo>')
+def exito(codigo):
+    return render_template('exito.html', codigo=codigo)
 
 if __name__ == '__main__':
-    init_db()
     app.run(debug=True)
