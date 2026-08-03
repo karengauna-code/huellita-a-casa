@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Mascota - Huellita a Casa ID</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0fdfa; padding: 20px; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 10px; border-top: 5px solid #0d9488; }
+        h1 { color: #0f766e; text-align: center; font-size: 24px; }
+        label { display: block; margin-top: 12px; font-weight: bold; color: #115e59; }
+        input, select, textarea { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccfbf1; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; background-color: #0d9488; color: white; border: none; padding: 12px; font-weight: bold; border-radius: 4px; margin-top: 20px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #0f766e; }
+        .back { display: block; text-align: center; margin-top: 15px; color: #0d9488; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Registro de Mascota</h1>
+        <form action="/registrar" method="POST" enctype="multipart/form-data">
+            <label>Nombre de la mascota:</label>
+            <input type="text" name="nombre_mascota" required>
+            
+            <label>Especie:</label>
+            <select name="especie">
+                <option value="Perro">Perro</option>
+                <option value="Gato">Gato</option>
+            </select>
+
+            <label>Foto de la mascota:</label>
+            <input type="file" name="foto" accept="image/*" required>
+
+            <label>Nombre del dueño:</label>
+            <input type="text" name="nombre_dueno" required>
+            
+            <label>Teléfono de contacto:</label>
+            <input type="text" name="telefono" required>
+            
+            <label>Dirección / Zona:</label>
+            <input type="text" name="direccion" required>
+            
+            <label>Información médica (Opcional - Alergias, medicación):</label>
+            <textarea name="info_medica" rows="3"></textarea>
+            
+            <button type="submit">Generar mi Código Único</button>
+        </form>
+        <a href="/" class="back">← Volver al inicio</a>
+    </div>
+</body>
+</html>
