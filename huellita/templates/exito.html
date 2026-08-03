@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>¡Registro Exitoso!</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0fdfa; padding: 20px; text-align: center; }
+        .container { max-width: 480px; margin: auto; background: white; padding: 30px; border-radius: 10px; border-top: 5px solid #0d9488; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #0f766e; }
+        .code { background: #f0fdfa; border: 2px dashed #0d9488; padding: 15px; font-size: 28px; font-weight: bold; color: #0d9488; margin: 20px 0; letter-spacing: 2px; }
+        .whatsapp-btn { display: inline-block; background-color: #25d366; color: white; padding: 14px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; text-decoration: none; margin-top: 15px; width: 100%; box-sizing: border-box; }
+        .whatsapp-btn:hover { background-color: #20ba5a; }
+        .instrucciones { font-size: 14px; color: #555; line-height: 1.5; text-align: left; background: #f8fafc; padding: 15px; border-radius: 6px; margin-top: 15px; }
+        a.home { color: #0d9488; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 20px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 ¡Registro Exitoso!</h1>
+        <p>Los datos de <strong>{{ mascota }}</strong> se guardaron correctamente en el sistema.</p>
+        
+        <p>Tu <strong>código único</strong> de identificación es:</p>
+        <div class="code">{{ codigo }}</div>
+        
+        <div class="instrucciones">
+            <strong>⚠️ Próximo paso para tener tu chapita:</strong>
+            <p style="margin: 8px 0 0 0;">Hacé clic en el botón de abajo para enviarnos este código por WhatsApp. Con él te prepararemos y enviaremos tu chapita física con el código QR listo.</p>
+        </div>
+
+        <!-- Botón que abre tu WhatsApp con el mensaje prearmado y el código generado -->
+        <a href="https://wa.me/5491164727249?text=Hola%20Karen,%20registré%2%20mi%20mascota%20y%20mi%20código%20es%20{{ codigo }}.%20Quiero%20pedir%20mi%20chapita%20QR." 
+           class="whatsapp-btn" target="_blank">
+            💬 Pedir mi Chapita por WhatsApp
+        </a>
+
+        <br><a href="/" class="home">← Volver a la página principal</a>
+    </div>
+</body>
+</html>
