@@ -4,8 +4,10 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
+DB_PATH = os.path.join('/tmp', 'database.db') if os.environ.get('RENDER') else 'database.db'
+
 def init_db():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS mascotas (
@@ -37,7 +39,7 @@ def registrar():
         direccion = request.form.get('direccion')
         observaciones = request.form.get('observaciones')
 
-        conn = sqlite3.connect('database.db')
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO mascotas (codigo_unico, nombre_mascota, especie, nombre_dueno, telefono, direccion, observaciones)
@@ -57,3 +59,5 @@ def exito(codigo):
 if __name__ == '__main__':
     init_db()
     app.run(debug=True)
+else:
+    init_db()
